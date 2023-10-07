@@ -1,7 +1,13 @@
 from rest_framework import serializers
-from models import students ,course
+from projectsapps.models import students ,course
 class studentSerializer(serializers.ModelSerializer):
     class Meta:
-        model=students,course
-        feilds ='__all__'
+        model=students
+        fields ='__all__'
+
+            
+class courseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=course
+        fields ='__all__'
 

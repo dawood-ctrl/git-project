@@ -12,4 +12,4 @@ class course(models.Model):
     Course_name = models.CharField(max_length=50)
     credits_hours = models.IntegerField()
     subjects = models.CharField(max_length=50)
-    Students = models.ManyToManyField(students)
+    Student = models.ManyToManyField(students)
