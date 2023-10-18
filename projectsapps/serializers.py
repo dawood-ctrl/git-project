@@ -10,4 +10,5 @@ class courseSerializer(serializers.ModelSerializer):
     class Meta:
         model=course
         fields ='__all__'
+        depth = 1
 

@@ -16,7 +16,6 @@ class Studentget(APIView):
         serializer= studentSerializer(stu,many=True)
         return Response(serializer.data)
     
-
 class Studentpost(APIView):    
     def post(self,request,format=None):
         serializers=studentSerializer(data=request.data)
@@ -25,7 +24,6 @@ class Studentpost(APIView):
             return Response({'msg':'data created'},status=status.HTTP_201_CREATED)
         return Response (serializers.errors, status=status.HTTP_400_BAD_REQUEST)
     
-
 class Studentput(APIView):
     def put(self,request,pk,format=None):
         # id=pk
@@ -36,7 +34,6 @@ class Studentput(APIView):
             return Response({'msg':'complete data updated'})
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
-
 class studentpatch(APIView):
     def patch(self,request,pk,format=None):
         stu=students.objects.get(id=pk)
@@ -52,16 +49,18 @@ class studentdelete(APIView):
             stu.delete()
             return Response({'msg':'data deleted'})
         
-
 class courseget(APIView):
-    def get(self,request,pk=None,format=None):
-        if pk is not None:
-            stu=course.objects.get(id=pk)
-            serializer=courseSerializer(stu)
+    def get(self, request, pk=None, format=None):
+        try:
+            if pk is not None:
+                course_instance = course.objects.get(id=pk)
+                serializer = courseSerializer(course_instance)
+                return Response(serializer.data)
+            courses = course.objects.all()
+            serializer = courseSerializer(courses, many=True)
             return Response(serializer.data)
-        stu = course.objects.all()
-        serializer=studentSerializer(stu,many=True)
-        return Response(serializer.data )
+        except course.DoesNotExist:
+            return Response({'error': 'Course not found'}, status=status.HTTP_404_NOT_FOUND)
 
 class coursepost(APIView):
     def post(self,request,format=None):
